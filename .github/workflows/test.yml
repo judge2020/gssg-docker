@@ -1,0 +1,11 @@
+name: Test
+on: push
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - run: |
+                docker build -t gssg .
+                docker run --rm gssg --url "https://demo.ghost.io"

@@ -1,0 +1,26 @@
+name: build
+on: push
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Login to GitHub Package Repository
+              env:
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                docker login docker.pkg.github.com -u anything -p $GH_TOKEN
+            - run: |
+                docker build -t gssg:build .
+            - run: |
+                docker tag gssg:build docker.pkg.github.com/judge2020/gssg-docker/gssg:$(date +%s)
+                docker tag gssg:build docker.pkg.github.com/judge2020/gssg-docker/gssg:$(GITHUB_SHA:0:39)
+                docker tag gssg:build docker.pkg.github.com/judge2020/gssg-docker/gssg:$(GITHUB_REF/refs\/heads\//)
+            - name: Tag latest if master
+              if: github.ref == 'refs/heads/master'
+              run: |
+                docker tag gssg:build docker.pkg.github.com/judge2020/gssg-docker/gssg:latest
+            - name: push
+              run: |
+                docker push docker.pkg.github.com/judge2020/gssg-docker/gssg
