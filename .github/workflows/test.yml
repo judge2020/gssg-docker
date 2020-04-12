@@ -14,4 +14,4 @@ jobs:
             - run: |
                 docker build -t gssg .
             - run: |
-                docker run --rm gssg
+                docker run --rm gssg --domain "http://ghost:2378"
