@@ -9,4 +9,4 @@ jobs:
             - run: |
                 docker build -t gssg .
             - run: |
-                docker run --rm gssg --url "https://demo.ghost.io"
+                docker run --rm gssg --domain "https://demo.ghost.io"
