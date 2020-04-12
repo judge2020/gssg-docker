@@ -15,8 +15,8 @@ jobs:
                 docker build -t gssg:build .
             - run: |
                 docker tag gssg:build docker.pkg.github.com/judge2020/gssg-docker/gssg:$(date +%s)
-                docker tag gssg:build docker.pkg.github.com/judge2020/gssg-docker/gssg:$(GITHUB_SHA:0:39)
-                docker tag gssg:build docker.pkg.github.com/judge2020/gssg-docker/gssg:$(GITHUB_REF/refs\/heads\//)
+                docker tag gssg:build docker.pkg.github.com/judge2020/gssg-docker/gssg:${GITHUB_SHA:0:39}
+                docker tag gssg:build docker.pkg.github.com/judge2020/gssg-docker/gssg:${GITHUB_REF/refs\/heads\//}
             - name: Tag latest if master
               if: github.ref == 'refs/heads/master'
               run: |
