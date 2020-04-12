@@ -3,10 +3,14 @@ on: push
 
 jobs:
     test:
+        container:
+            image: ghost
+        ports:
+            - 2368
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
             - run: |
                 docker build -t gssg .
             - run: |
-                docker run --rm gssg --domain "https://demo.ghost.io"
+                docker run --rm gssg
